@@ -8,7 +8,14 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    courses_path
+    if resource.is_a?(User)
+      if resource.tutor?
+        new_course_path
+      else
+        root_path
+      end
+    else
+      root_path
+    end
   end
-
 end
